@@ -479,6 +479,10 @@ func (r *rpcClient) SendDisposition(ctx context.Context, m *Message, state dispo
 		Value: value,
 	}
 
+	if m.getLinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = m.getLinkName()
+	}
+
 	// no error, then it was successful
 	_, err := r.doRPCWithRetry(ctx, m.ec.ManagementPath(), msg, 5, 5*time.Second, opts...)
 	if err != nil {
