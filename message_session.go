@@ -78,6 +78,10 @@ func (ms *MessageSession) RenewLock(ctx context.Context) error {
 		msg.ApplicationProperties["com.microsoft:server-timeout"] = uint(time.Until(deadline) / time.Millisecond)
 	}
 
+	if ms.LinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = ms.LinkName()
+	}
+
 	resp, err := link.RetryableRPC(ctx, 5, 5*time.Second, msg)
 	if err != nil {
 		tab.For(ctx).Error(err)
@@ -116,6 +120,10 @@ func (ms *MessageSession) ListSessions(ctx context.Context) ([]byte, error) {
 		},
 	}
 
+	if ms.LinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = ms.LinkName()
+	}
+
 	rsp, err := link.RetryableRPC(ctx, 5, 5*time.Second, msg)
 	if err != nil {
 		tab.For(ctx).Error(err)
@@ -151,6 +159,10 @@ func (ms *MessageSession) SetState(ctx context.Context, state []byte) error {
 		},
 	}
 
+	if ms.LinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = ms.LinkName()
+	}
+
 	rsp, err := link.RetryableRPC(ctx, 5, 5*time.Second, msg)
 	if err != nil {
 		return err
@@ -179,6 +191,10 @@ func (ms *MessageSession) State(ctx context.Context) ([]byte, error) {
 		Value: map[string]interface{}{
 			"session-id": ms.SessionID(),
 		},
+	}
+
+	if ms.LinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = ms.LinkName()
 	}
 
 	rsp, err := link.RetryableRPC(ctx, 5, 5*time.Second, msg)

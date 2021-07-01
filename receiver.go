@@ -196,6 +196,14 @@ func (r *Receiver) Recover(ctx context.Context) error {
 	return r.newSessionAndLink(ctx)
 }
 
+// LinkName returns associated link name or empty string if receiver or link is not defined.
+func (r *Receiver) LinkName() string {
+	if r.receiver != nil {
+		return r.receiver.LinkName()
+	}
+	return ""
+}
+
 // ReceiveOne will receive one message from the link
 func (r *Receiver) ReceiveOne(ctx context.Context, handler Handler) error {
 	ctx, span := r.startConsumerSpanFromContext(ctx, "sb.Receiver.ReceiveOne")

@@ -104,6 +104,14 @@ func (s *Sender) Recover(ctx context.Context) error {
 	return s.newSessionAndLink(ctx)
 }
 
+// LinkName returns associated link name or empty string if sender or link is not defined.
+func (r *Sender) LinkName() string {
+	if r.sender != nil {
+		return r.sender.LinkName()
+	}
+	return ""
+}
+
 // Close will close the AMQP connection, session and link of the Sender
 func (s *Sender) Close(ctx context.Context) error {
 	ctx, span := s.startProducerSpanFromContext(ctx, "sb.Sender.Close")
