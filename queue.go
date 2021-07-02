@@ -238,6 +238,15 @@ func (q *Queue) Receive(ctx context.Context, handler Handler) error {
 	return handle.Err()
 }
 
+// RecoverReceiver recovers receiver associated with the queue.
+// Recover will attempt to close the current session and link, then rebuild them
+func (q *Queue) RecoverReceiver(ctx context.Context) error {
+	if q.receiver != nil {
+		return q.receiver.Recover(ctx)
+	}
+	return nil
+}
+
 // NewSession will create a new session based receiver and sender for the queue
 //
 // Microsoft Azure Service Bus sessions enable joint and ordered handling of unbounded sequences of related messages.
