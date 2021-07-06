@@ -407,7 +407,7 @@ func (r *rpcClient) RenewLocks(ctx context.Context, messages ...*Message) error 
 		amqpLockToken := amqp.UUID(*m.LockToken)
 		lockTokens = append(lockTokens, amqpLockToken)
 		if linkName == "" {
-			linkName = m.getLinkName()
+			linkName = m.LinkName()
 		}
 	}
 
@@ -479,8 +479,8 @@ func (r *rpcClient) SendDisposition(ctx context.Context, m *Message, state dispo
 		Value: value,
 	}
 
-	if m.getLinkName() != "" {
-		msg.ApplicationProperties[associatedLinkName] = m.getLinkName()
+	if m.LinkName() != "" {
+		msg.ApplicationProperties[associatedLinkName] = m.LinkName()
 	}
 
 	// no error, then it was successful

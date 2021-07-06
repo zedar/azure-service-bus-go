@@ -131,9 +131,9 @@ func NewMessage(data []byte) *Message {
 	}
 }
 
-// getLinkName returns associated link name or empty string if receiver or link is not defined,
-func (m *Message) getLinkName() string {
-	return m.message.GetLinkName()
+// LinkName returns associated link name or empty string if receiver or link is not defined,
+func (m *Message) LinkName() string {
+	return m.message.LinkName()
 }
 
 // CompleteAction will notify Azure Service Bus that the message was successfully handled and should be deleted from the

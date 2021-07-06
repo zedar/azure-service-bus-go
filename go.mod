@@ -18,4 +18,4 @@ require (
 	nhooyr.io/websocket v1.8.6
 )
 
-replace github.com/Azure/go-amqp => github.com/zedar/go-amqp v0.13.9-beta.0
+replace github.com/Azure/go-amqp => github.com/zedar/go-amqp v0.13.9-beta.2
