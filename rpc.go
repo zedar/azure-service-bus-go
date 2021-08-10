@@ -424,9 +424,9 @@ func (r *rpcClient) RenewLocks(ctx context.Context, messages ...*Message) error 
 			lockTokensFieldName: lockTokens,
 		},
 	}
-	if linkName != "" {
-		renewRequestMsg.ApplicationProperties[associatedLinkName] = linkName
-	}
+	// if linkName != "" {
+	// renewRequestMsg.ApplicationProperties[associatedLinkName] = linkName
+	// }
 
 	response, err := r.doRPCWithRetry(ctx, r.ec.ManagementPath(), renewRequestMsg, 3, 1*time.Second)
 	if err != nil {
@@ -479,9 +479,9 @@ func (r *rpcClient) SendDisposition(ctx context.Context, m *Message, state dispo
 		Value: value,
 	}
 
-	if m.LinkName() != "" {
-		msg.ApplicationProperties[associatedLinkName] = m.LinkName()
-	}
+	// if m.LinkName() != "" {
+	// msg.ApplicationProperties[associatedLinkName] = m.LinkName()
+	// }
 
 	// no error, then it was successful
 	_, err := r.doRPCWithRetry(ctx, m.ec.ManagementPath(), msg, 5, 5*time.Second, opts...)
